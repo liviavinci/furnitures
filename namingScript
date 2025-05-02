@@ -1,0 +1,24 @@
+for f in *; do
+  if [ -d "$f" ]; then
+    continue
+  fi
+
+  if [ "$f" = ".DS_Store" ]; then
+    continue
+  fi
+
+  case "$f" in
+    *.*) ext="${f##*.}" ;;
+    *)    ext=""          ;;
+  esac
+
+  uuid=$(uuidgen)  
+
+  if [ -n "$ext" ]; then
+    new="$uuid.$ext"
+  else
+    new="$uuid"
+  fi
+
+  mv -- "$f" "$new"
+done
